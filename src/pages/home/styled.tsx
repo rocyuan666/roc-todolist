@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
 export const StyledHomeWrap = styled.div`
-	color: #f00;
+	display: flex;
+	padding-left: 300px;
 `
