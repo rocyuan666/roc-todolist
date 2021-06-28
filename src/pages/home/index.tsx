@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Switch, Route, Redirect } from "react-router-dom"
 
-import CpnRocSiderMenu from './components/sider-menu';
-import CpnRocHeaderBar from './components/header-bar';
+import CpnRocSiderMenu from './c-cpns/sider-menu';
+import CpnRocHeaderBar from './c-cpns/header-bar';
 import RocMyAwaitHandle from './c-pages/my-await-handle';
 import RocDataCharts from './c-pages/data-charts';
 import RocSetup from './c-pages/setup';
