@@ -107,6 +107,8 @@ export const StyledMatterWrap = styled.div`
 			}
 		}
 		.right-box{
+			display: flex;
+			justify-content: center;
 			width: 125px;
 			opacity: 0;
 			transition: all .3s;

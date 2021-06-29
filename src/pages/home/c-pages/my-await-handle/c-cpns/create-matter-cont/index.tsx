@@ -6,24 +6,45 @@ import { StyledCreateMatterContWrap } from "./styled";
 import { message } from "antd";
 
 interface Istate {
-	urgantColorList: string[],
+	urgentColorList: string[],
 	urgentActiveIndex: number,
-	matterCont: string
+	matterCont: string,
+	isEdit: boolean
 }
 
 interface Iprops {
 	propClickCancel: () => void,
-	propClickOk: (urgentState: string, text: string) => void
+	propClickOk: (urgentState: string, text: string, isEdit: boolean) => void,
+	urgentColor: string,
+	matterName: string
 }
 
 export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate> {
 	constructor(props: Iprops) {
 		super(props)
 		this.state = {
-			urgantColorList: ["#a8071a", "#f5222d", "#ff7875", "#ffccc7"],
+			urgentColorList: ["#a8071a", "#f5222d", "#ff7875", "#ffccc7"],
 			urgentActiveIndex: 0,
-			matterCont: ""
+			matterCont: "",
+			isEdit: false
 		}
+	}
+	componentDidMount() {
+		let newUrgentActiveIndex: number = 0;
+		this.state.urgentColorList.forEach((item: string, index: number) => {
+			if (this.props.urgentColor === item) {
+				newUrgentActiveIndex = index
+			}
+		})
+		if (this.props.matterName) {
+			this.setState({
+				isEdit: true
+			})
+		}
+		this.setState({
+			matterCont: this.props.matterName,
+			urgentActiveIndex: newUrgentActiveIndex
+		})
 	}
 	// 处理点击取消
 	handleClickCancel() {
@@ -31,9 +52,10 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 	}
 	// 处理点击创建
 	handleClickOk() {
-		const { urgantColorList, urgentActiveIndex, matterCont } = this.state;
-		if (matterCont.trim() === "") return message.error("事项名称不能为空！")
-		this.props.propClickOk(urgantColorList[urgentActiveIndex], matterCont)
+		const { urgentColorList, urgentActiveIndex, matterCont, isEdit } = this.state;
+		if (matterCont.trim() === "")
+			return message.error("事项名称不能为空！")
+		this.props.propClickOk(urgentColorList[urgentActiveIndex], matterCont, isEdit)
 	}
 	// 处理修改优先级改变
 	changeUrgentIndex(index: number) {
@@ -48,7 +70,7 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 		})
 	}
 	render() {
-		const { urgantColorList, urgentActiveIndex, matterCont } = this.state;
+		const { urgentColorList, urgentActiveIndex, matterCont, isEdit } = this.state;
 		return (
 			<StyledCreateMatterContWrap>
 				<div className="inpt-box">
@@ -64,7 +86,7 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 					<label className="name" htmlFor="matter-urgent">事项优先级:</label>
 					<div className="value-box">
 						{
-							urgantColorList.map((item: string, index: number) => {
+							urgentColorList.map((item: string, index: number) => {
 								return (
 									<span
 										key={index}
@@ -83,7 +105,7 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 				</div>
 				<div className="btn-box">
 					<span className="cancel" onClick={() => { this.handleClickCancel() }}>取消</span>
-					<span className="ok" onClick={() => { this.handleClickOk() }}>创建</span>
+					<span className="ok" onClick={() => { this.handleClickOk() }}>{isEdit ? "修改" : "新建"}</span>
 				</div>
 			</StyledCreateMatterContWrap>
 		)
