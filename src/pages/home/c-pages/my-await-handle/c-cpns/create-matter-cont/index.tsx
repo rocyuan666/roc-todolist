@@ -50,7 +50,7 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 	handleClickCancel() {
 		this.props.propClickCancel()
 	}
-	// 处理点击创建
+	// 处理点击创建 | 修改
 	handleClickOk() {
 		const { urgentColorList, urgentActiveIndex, matterCont, isEdit } = this.state;
 		if (matterCont.trim() === "")

@@ -29,7 +29,8 @@ interface IState {
 	isPopShow: boolean,
 	popTile: string,
 	matterName: string,
-	urgentColor: string
+	urgentColor: string,
+	currentEditIndex: number
 }
 
 class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
@@ -40,7 +41,8 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 			isPopShow: false,
 			popTile: "",
 			matterName: "",
-			urgentColor: ""
+			urgentColor: "",
+			currentEditIndex: -1
 		}
 	}
 	// 点击了确定
@@ -53,15 +55,16 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 		const newMatterList: IMatterItem[] = [...this.props.matterList];
 		if (isEdit) {
 			// 修改
-			
+			newMatterList.splice(this.state.currentEditIndex, 1, newMatterItem)
+			this.props.changeMatterList(newMatterList)
 		} else {
 			// 新建
 			newMatterList.unshift(newMatterItem)
 			this.props.changeMatterList(newMatterList)
-			this.setState({
-				isPopShow: false
-			})
 		}
+		this.setState({
+			isPopShow: false
+		})
 	}
 	// 点击了取消
 	clickCancel() {
@@ -96,6 +99,7 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 		this.setState({
 			popTile: "修改待办事项",
 			isPopShow: true,
+			currentEditIndex: index,
 			urgentColor: this.props.matterList[index].urgentState,
 			matterName: this.props.matterList[index].text
 		})
