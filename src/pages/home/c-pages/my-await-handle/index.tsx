@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import classnames from "classnames";
 
 import { TypeML } from "../../../../store/reducer";
-import { actionChangeMatterList } from "../../../../store/actions";
+import { actionChangeMatterList, actionChangeDoneMatterList } from "../../../../store/actions";
 
-import { StyledMyAwaitHandleWrap, StyledMatterWrap } from "./styled";
+import { StyledMyAwaitHandleWrap, StyledMatterWrap, StyledDelPopWrap } from "./styled";
 
 import { Modal } from "antd";
 import { FormOutlined, DeleteOutlined, CheckOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
@@ -15,7 +15,10 @@ import CpmRocNonePage from "../../../../components/none-page";
 interface IProps {
 	matterList: IMatterItem[],
 	changeMatterList: (matterList: IMatterItem[]) => void,
-	[props: string]: any
+	doneMatterList: IMatterItem[],
+	changeDoneMatterList: (matterList: IMatterItem[]) => void,
+	themeColor: string[],
+	themeColorCurrentIndex: number
 }
 
 export interface IMatterItem {
@@ -27,10 +30,13 @@ export interface IMatterItem {
 interface IState {
 	matterList: IMatterItem[],
 	isPopShow: boolean,
+	isDelete: boolean,
 	popTile: string,
 	matterName: string,
 	urgentColor: string,
-	currentEditIndex: number
+	currentEditIndex: number,
+	delCurrentIndex: number,
+	delCurrentMatter: IMatterItem
 }
 
 class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
@@ -39,10 +45,17 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 		this.state = {
 			matterList: [],
 			isPopShow: false,
+			isDelete: false,
 			popTile: "",
 			matterName: "",
 			urgentColor: "",
-			currentEditIndex: -1
+			currentEditIndex: -1,
+			delCurrentIndex: -1,
+			delCurrentMatter: {
+				urgentState: "",
+				state: false,
+				text: ""
+			}
 		}
 	}
 	// 点击了确定
@@ -83,16 +96,62 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 	}
 	// 处理事项状态改变
 	handleMatterStateChange(index: number, state: boolean): void {
-		const newMatterList: IMatterItem[] = [...this.props.matterList];
-		const editMatterList: IMatterItem[] = newMatterList.map((mItem: IMatterItem, mIndex: number) => {
-			if (index === mIndex) {
-				mItem.state = !state
-				return mItem
-			} else {
-				return mItem
-			}
-		})
-		this.props.changeMatterList(editMatterList);
+		const { matterList, changeMatterList, doneMatterList, changeDoneMatterList } = this.props;
+		if (state) {
+			// 完成的改变为未完成的
+			const newDoneMatterList: IMatterItem[] = [...matterList];
+			const newMatterList: IMatterItem[] = [...doneMatterList];
+			doneMatterList.forEach((mItem: IMatterItem, mIndex: number) => {
+				if (index === mIndex) {
+					mItem.state = !mItem.state
+					// 判断未完成事项里是否有事项
+					if (matterList.length !== 0) {
+						for (let i = 0; i < matterList.length; i++) {
+							if (matterList[i].text === mItem.text) {
+								newDoneMatterList.splice(i, 1, mItem)
+							} else {
+								newDoneMatterList.push(mItem)
+								// 必须终止内部循环，否则内部循环会多次push
+								break;
+							}
+						}
+					} else {
+						newDoneMatterList.push(mItem)
+					}
+					// 删除未完成数组项
+					newMatterList.splice(mIndex, 1)
+				}
+			})
+			changeMatterList(newDoneMatterList);
+			changeDoneMatterList(newMatterList);
+		} else {
+			// 未完成的改变为完成的
+			const newMatterList: IMatterItem[] = [...matterList];
+			const newDoneMatterList: IMatterItem[] = [...doneMatterList];
+			matterList.forEach((mItem: IMatterItem, mIndex: number) => {
+				if (index === mIndex) {
+					mItem.state = !mItem.state
+					// 判断完成事项里是否有事项
+					if (doneMatterList.length !== 0) {
+						for (let i = 0; i < doneMatterList.length; i++) {
+							if (doneMatterList[i].text === mItem.text) {
+								newDoneMatterList.splice(i, 1, mItem)
+							} else {
+								newDoneMatterList.push(mItem)
+								// 必须终止内部循环，否则内部循环会多次push
+								break;
+							}
+						}
+					} else {
+						newDoneMatterList.push(mItem)
+					}
+					// 删除未完成数组项
+					newMatterList.splice(mIndex, 1)
+				}
+			})
+			changeMatterList(newMatterList);
+			changeDoneMatterList(newDoneMatterList);
+		}
 	}
 	// 编辑事项
 	handleEdit(index: number) {
@@ -105,27 +164,19 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 		})
 	}
 	// 删除事项
-	handleDelete(index: number) {
-		const that = this;
-		console.log("删除事项", index)
-		Modal.confirm({
-			title: '删除事项',
-			icon: <ExclamationCircleOutlined />,
-			content: '您确定要删除此事项？',
-			okText: '确认',
-			cancelText: '取消',
-			onOk() {
-				const newMatterList = [...that.props.matterList]
-				newMatterList.splice(index, 1)
-				that.props.changeMatterList(newMatterList)
-			}
-		});
+	handleDelete(index: number, matterItem: IMatterItem) {
+		// const that = this;
+		this.setState({
+			isDelete: true,
+			delCurrentIndex: index,
+			delCurrentMatter: matterItem
+		})
 	}
 	// 事项列表渲染
 	matterListRender(matterList: IMatterItem[]) {
 		if (matterList.length) {
 			return (
-				matterList.map((matterItem: IMatterItem, matterIndex) => {
+				matterList.map((matterItem: IMatterItem, matterIndex: number) => {
 					return (
 						<div
 							className={
@@ -164,26 +215,68 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 									!matterItem.state &&
 									<FormOutlined onClick={() => { this.handleEdit(matterIndex) }} className="icon-edit" />
 								}
-								<DeleteOutlined onClick={() => { this.handleDelete(matterIndex) }} className="icon-delete" />
+								<DeleteOutlined onClick={() => { this.handleDelete(matterIndex, matterItem) }} className="icon-delete" />
 							</div>
 						</div>
 					)
 				})
 			)
 		} else {
-			return <CpmRocNonePage />
+			return <CpmRocNonePage height={200} />
 		}
+	}
+	// 取消删除
+	clickCancelDel() {
+		this.setState({
+			isDelete: false
+		})
+	}
+	// 确定删除
+	clickOkDel() {
+		const { delCurrentMatter, delCurrentIndex } = this.state;
+		let newMatterList: IMatterItem[] = [];
+		if (delCurrentMatter.state) {
+			// 删除的已办事项
+			newMatterList = [...this.props.doneMatterList]
+			newMatterList.splice(delCurrentIndex, 1)
+			this.props.changeDoneMatterList(newMatterList)
+		} else {
+			// 删除的未办事项
+			newMatterList = [...this.props.matterList]
+			newMatterList.splice(delCurrentIndex, 1)
+			this.props.changeMatterList(newMatterList)
+		}
+		this.setState({
+			isDelete: false
+		})
 	}
 	// 渲染
 	render() {
-		const { isPopShow, popTile, matterName, urgentColor } = this.state;
-		const { matterList } = this.props;
+		const { isPopShow, isDelete, popTile, matterName, urgentColor } = this.state;
+		const { matterList, doneMatterList, themeColor, themeColorCurrentIndex } = this.props;
 		return (
-			<StyledMyAwaitHandleWrap>
+			<StyledMyAwaitHandleWrap themeColor={themeColor[themeColorCurrentIndex]}>
 				<div className="title-box">
-					<h2>我的待办</h2>
+					<h2>待办事项</h2>
 					<span className="btn-create" onClick={(e: unknown) => { this.cerateMatter() }}>新建待办</span>
 				</div>
+				{/* 待办事项 */}
+				<StyledMatterWrap themeColor={themeColor[themeColorCurrentIndex]}>
+					{/* 每项事项 */}
+					{
+						this.matterListRender(matterList)
+					}
+				</StyledMatterWrap>
+				<div className="title-box">
+					<h2>已办事项</h2>
+				</div>
+				{/* 完成事项 */}
+				<StyledMatterWrap themeColor={themeColor[themeColorCurrentIndex]}>
+					{/* 每项事项 */}
+					{
+						this.matterListRender(doneMatterList)
+					}
+				</StyledMatterWrap>
 				{/* 新建待办弹窗 */}
 				<Modal
 					title={popTile}
@@ -199,15 +292,33 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 						propClickOk={(urgentState: string, text: string, isEdit: boolean) => { this.clickOk(urgentState, text, isEdit) }}
 						matterName={matterName}
 						urgentColor={urgentColor}
+						matterList={this.props.matterList}
+						doneMatterList={this.props.doneMatterList}
+						currentEditIndex={this.state.currentEditIndex}
+						themeColor={themeColor[themeColorCurrentIndex]}
 					/>
 				</Modal>
-				{/* 事项 */}
-				<StyledMatterWrap>
-					{/* 每项事项 */}
-					{
-						this.matterListRender(matterList)
-					}
-				</StyledMatterWrap>
+				<Modal
+					title={"删除"}
+					visible={isDelete}
+					cancelText="取消"
+					okText="确定"
+					width={400}
+					footer={null}
+					onCancel={_ => { this.clickCancelDel() }}
+					className="del-pop"
+				>
+					<StyledDelPopWrap themeColor={themeColor[themeColorCurrentIndex]}>
+						<div className="del-pop-cont">
+							<ExclamationCircleOutlined className="icon-del" />
+							<p className="text">是否删除事项？</p>
+						</div>
+						<div className="btn-box">
+							<span className="btn-del cancel" onClick={() => { this.clickCancelDel() }}>取消</span>
+							<span className="btn-del ok" onClick={() => { this.clickOkDel() }}>删除</span>
+						</div>
+					</StyledDelPopWrap>
+				</Modal>
 			</StyledMyAwaitHandleWrap>
 		)
 	}
@@ -215,13 +326,19 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
 
 const mapStateToProps = (state: TypeML) => {
 	return {
-		matterList: state.matterList
+		matterList: state.matterList,
+		doneMatterList: state.doneMatterList,
+		themeColor: state.themeColor,
+		themeColorCurrentIndex: state.themeColorCurrentIndex
 	}
 }
 const mapDispatchToProps = (dispatch: any) => {
 	return {
 		changeMatterList(matterList: IMatterItem[]): void {
 			dispatch(actionChangeMatterList(matterList))
+		},
+		changeDoneMatterList(doneMatterList: IMatterItem[]): void {
+			dispatch(actionChangeDoneMatterList(doneMatterList))
 		}
 	}
 }

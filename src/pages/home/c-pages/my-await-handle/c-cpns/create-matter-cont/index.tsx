@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 
+import { IMatterItem } from "../../index"
+
 import { StyledCreateMatterContWrap } from "./styled";
 
 import { message } from "antd";
@@ -16,14 +18,18 @@ interface Iprops {
 	propClickCancel: () => void,
 	propClickOk: (urgentState: string, text: string, isEdit: boolean) => void,
 	urgentColor: string,
-	matterName: string
+	matterName: string,
+	matterList: IMatterItem[],
+	doneMatterList: IMatterItem[],
+	currentEditIndex: number,
+	themeColor: string
 }
 
 export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate> {
 	constructor(props: Iprops) {
 		super(props)
 		this.state = {
-			urgentColorList: ["#a8071a", "#f5222d", "#ff7875", "#ffccc7"],
+			urgentColorList: ["#a8071a", "#faad14", "#13c2c2", "#389e0d"],
 			urgentActiveIndex: 0,
 			matterCont: "",
 			isEdit: false
@@ -53,8 +59,39 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 	// 处理点击创建 | 修改
 	handleClickOk() {
 		const { urgentColorList, urgentActiveIndex, matterCont, isEdit } = this.state;
+		const { matterList, doneMatterList, currentEditIndex } = this.props;
 		if (matterCont.trim() === "")
 			return message.error("事项名称不能为空！")
+		let isYes: boolean = false;
+		if (!isEdit) {
+			// 不是编辑
+			for (let i in matterList) {
+				if (matterList[i].text === matterCont.trim()) {
+					isYes = true
+					break;
+				}
+			}
+		} else {
+			// 是编辑
+			let newMatterList = [...matterList]
+			newMatterList.splice(currentEditIndex, 1)
+			for (let i in newMatterList) {
+				if (newMatterList[i].text === matterCont.trim()) {
+					isYes = true
+					break;
+				}
+			}
+		}
+		if (!isYes) {
+			for (let i in doneMatterList) {
+				if (doneMatterList[i].text === matterCont.trim()) {
+					isYes = true
+					break;
+				}
+			}
+		}
+		if (isYes)
+			return message.error("此事项已经添加，请重新添加！")
 		this.props.propClickOk(urgentColorList[urgentActiveIndex], matterCont, isEdit)
 	}
 	// 处理修改优先级改变
@@ -72,7 +109,7 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
 	render() {
 		const { urgentColorList, urgentActiveIndex, matterCont, isEdit } = this.state;
 		return (
-			<StyledCreateMatterContWrap>
+			<StyledCreateMatterContWrap themeColor={this.props.themeColor}>
 				<div className="inpt-box">
 					<label className="name" htmlFor="matter-name">事项名称:</label>
 					<input

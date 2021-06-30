@@ -53,11 +53,11 @@ export const StyledNavWrap = styled.div`
 			margin-right: 10px;
 		}
 		&:hover{
-			color: #f00;
+			color: ${(props:{themeColor:string}) => props.themeColor};
 			background: #F1F2F6;
 		}
 		&.active{
-			color: #f00;
+			color: ${(props:{themeColor:string}) => props.themeColor};
 			background: #F1F2F6;
 		}
 		&:active{

@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react';
 import { NavLink } from "react-router-dom";
-import { CopyOutlined, SettingOutlined, ProjectOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { connect } from "react-redux";
+
+import { TypeML } from "../../../../store/reducer";
 
 import { StyledSiderMenuWrap, StyledHeaderInfoWrap, StyledNavWrap } from "./styled";
+
+import { CopyOutlined, SettingOutlined, ProjectOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 function HeaderInfoBox() {
 	return (
@@ -16,15 +20,22 @@ function HeaderInfoBox() {
 	)
 }
 
-export default class CpnRocSiderMenu extends PureComponent {
+interface IProps {
+	themeColor: string[],
+	themeColorCurrentIndex: number
+}
+
+class CpnRocSiderMenu extends PureComponent<IProps> {
+
 	render() {
+		const { themeColor, themeColorCurrentIndex } = this.props;
 		return (
 			<StyledSiderMenuWrap>
 				{HeaderInfoBox()}
-				<StyledNavWrap>
+				<StyledNavWrap themeColor={themeColor[themeColorCurrentIndex]}>
 					<NavLink className="btn-nav" to="/home/my-await-handle">
 						<CopyOutlined className="btn-icon" />
-						<span>我的待办</span>
+						<span>我的事项</span>
 					</NavLink>
 					<NavLink className="btn-nav" to="/home/data-charts">
 						<ProjectOutlined className="btn-icon" />
@@ -43,3 +54,11 @@ export default class CpnRocSiderMenu extends PureComponent {
 		)
 	}
 }
+const mapStateToProps = (state: TypeML) => {
+	return {
+		themeColor: state.themeColor,
+		themeColorCurrentIndex: state.themeColorCurrentIndex
+	}
+}
+
+export default connect(mapStateToProps)(CpnRocSiderMenu)

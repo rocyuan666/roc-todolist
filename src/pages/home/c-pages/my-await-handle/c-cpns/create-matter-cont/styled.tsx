@@ -80,11 +80,11 @@ export const StyledCreateMatterContWrap = styled.div`
 			}
 			&.ok{
 				color: #fff;
-				border: 1px solid #f00;
-				background-color: #f00;
+				border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
+				background-color: ${(props: {themeColor: string}) => props.themeColor};
 				&:hover{
-					color: #f00;
-					border: 1px solid #f00;
+					color: ${(props: {themeColor: string}) => props.themeColor};
+					border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
 					background-color: #fff;
 				}
 			}

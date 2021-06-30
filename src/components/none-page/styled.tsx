@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 interface IProps{
-	height: number
+	height: number,
+	themeColor: string,
 }
 
 export const StyledNonePageWrap = styled.div`
@@ -10,7 +11,7 @@ export const StyledNonePageWrap = styled.div`
 	justify-content: center;
 	align-items: center;
 	.icon-none{
-		font-size: 88px;
-		color: #f00;
+		font-size: 70px;
+		color: ${(props: IProps) => props.themeColor};
 	}
 `

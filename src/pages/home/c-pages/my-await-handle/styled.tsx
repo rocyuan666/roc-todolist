@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledMyAwaitHandleWrap = styled.div`
+	padding-bottom: 20px;
 	/* 标题 */
 	.title-box{
 		height: 50px;
@@ -19,11 +20,11 @@ export const StyledMyAwaitHandleWrap = styled.div`
 			border-radius: 15px;
 			cursor: pointer;
 			color: #fff;
-			background-color: #f00;
-			border: 1px solid #f00;
+			background-color: ${(props: {themeColor: string}) => props.themeColor};
+			border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
 			transition: all .3s;
 			&:hover{
-				color: #f00;
+				color: ${(props: {themeColor: string}) => props.themeColor};
 				background-color: #fff;
 			}
 		}
@@ -46,7 +47,7 @@ export const StyledMatterWrap = styled.div`
 		min-height: 80px;
 		transition: all .3s;
 		&.active{
-			background-color: #eee;	
+			background-color: #fff;	
 		}
 		&:hover{
 			background-color: #eee;
@@ -83,19 +84,29 @@ export const StyledMatterWrap = styled.div`
 						color: #fff;
 						padding: 8px;
 						font-size: 18px;
-						background-color: #f00;
+						background-color: ${(props: {themeColor: string}) => props.themeColor};
 						transform: translateY(-40px);
 						opacity: 0;
 						transition: all .3s;
 					}
 					&:hover{
-						border: 1px solid #f00;
-					}
-					&.active{
-						border: 1px solid #f00;
+						border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
 						.icon-yes{
 							opacity: 1;
 							transform: translateY(0);
+						}
+					}
+					&.active{
+						border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
+						.icon-yes{
+							opacity: 1;
+							transform: translateY(0);
+						}
+						&:hover{
+							.icon-yes{
+								opacity: 1;
+								transform: translateY(-40px);
+							}
 						}
 					}
 				}
@@ -117,6 +128,58 @@ export const StyledMatterWrap = styled.div`
 				color: #666;
 				margin: 0 20px;
 				cursor: pointer;
+			}
+		}
+	}
+`
+
+// 删除弹窗
+export const StyledDelPopWrap = styled.div`
+	.del-pop-cont{
+		display: flex;
+		align-items: center;
+		.icon-del{
+			font-size: 26px;
+			color: #fa8c16;
+			margin-right: 10px;
+		}
+		.text{
+			font-size: 16px;
+			margin-bottom: 0;
+		}
+	}
+	.btn-box{
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 30px;
+		span{
+			display: block;
+			height: 28px;
+			line-height: 28px;
+			border-radius: 14px;
+			padding: 0 28px;
+			cursor: pointer;
+			transition: all .3s;
+			margin: 0 10px;
+			&.cancel{
+				color: #aaa;
+				border: 1px solid #aaa;
+				background-color: #fff;
+				&:hover{
+					color: #fff;
+					border: 1px solid #aaa;
+					background-color: #aaa;
+				}
+			}
+			&.ok{
+				color: #fff;
+				border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
+				background-color: ${(props: {themeColor: string}) => props.themeColor};
+				&:hover{
+					color: ${(props: {themeColor: string}) => props.themeColor};
+					border: 1px solid ${(props: {themeColor: string}) => props.themeColor};
+					background-color: #fff;
+				}
 			}
 		}
 	}
