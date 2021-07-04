@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 
-export default class RocLigin extends PureComponent {
+// 预留
+export default class RocLogin extends PureComponent {
 	render() {
 		return (
 			<div>
-				RocLigin
+				<h2>登录</h2>
 			</div>
 		)
 	}
