@@ -6,7 +6,12 @@ import { TypeML } from "../../../../store/reducer";
 
 import { StyledSiderMenuWrap, StyledHeaderInfoWrap, StyledNavWrap } from "./styled";
 
-import { CopyOutlined, SettingOutlined, ProjectOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import {
+	CopyOutlined,
+	SettingOutlined,
+	// ProjectOutlined,
+	InfoCircleOutlined
+} from "@ant-design/icons";
 
 function HeaderInfoBox() {
 	return (
@@ -37,10 +42,11 @@ class CpnRocSiderMenu extends PureComponent<IProps> {
 						<CopyOutlined className="btn-icon" />
 						<span>我的事项</span>
 					</NavLink>
-					<NavLink className="btn-nav" to="/home/data-charts">
+					{/* 预留 */}
+					{/* <NavLink className="btn-nav" to="/home/data-charts">
 						<ProjectOutlined className="btn-icon" />
 						<span>数据统计</span>
-					</NavLink>
+					</NavLink> */}
 					<NavLink className="btn-nav" to="/home/setup">
 						<SettingOutlined className="btn-icon" />
 						<span>设置</span>
