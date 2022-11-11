@@ -1,32 +1,52 @@
-import React from 'react';
-import { HashRouter, NavLink, Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./store";
 
-import RocHome from './pages/home';
+import RocHome from "./pages/home";
 import RocLogin from "./pages/login";
+import RocRegister from "./pages/register";
+
+function RouterBefourEach(props: any) {
+  const currPath = props.location.pathname;
+  const targetRouter = props.routers.find((item: any) => currPath.indexOf(item.path) !== -1);
+  const token = localStorage.getItem("token");
+  if (token) {
+    // 登录过了
+    if (targetRouter.path === "/login" || targetRouter.path === "/register") {
+      return <Redirect to="/"></Redirect>;
+    } else {
+      return <Route path={targetRouter.path} component={targetRouter.component}></Route>;
+    }
+  } else {
+    // 没有登录
+    if (targetRouter.path === "/login" || targetRouter.path === "/register") {
+      return <Route path={targetRouter.path} component={targetRouter.component}></Route>;
+    } else {
+      return <Redirect to="/login"></Redirect>;
+    }
+  }
+}
 
 function App() {
-	return (
-		<Provider store={store}>
-			<HashRouter>
-				{/* 路由链接 */}
-				<div>
-					<NavLink exact to="/home" />
-					<NavLink to="/login" />
-				</div>
-				{/* 显示 */}
-				<Switch>
-					<Route exact path="/">
-						<Redirect to="/home" />
-					</Route>
-					<Route path="/home" component={RocHome}></Route>
-					<Route path="/login" component={RocLogin}></Route>
-				</Switch>
-			</HashRouter>
-		</Provider>
-	);
+  const routers = [
+    { path: "/home", component: RocHome },
+    { path: "/login", component: RocLogin },
+    { path: "/register", component: RocRegister },
+  ];
+  return (
+    <Provider store={store}>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/home"></Redirect>
+          </Route>
+          <RouterBefourEach routers={routers}></RouterBefourEach>
+        </Switch>
+      </HashRouter>
+    </Provider>
+  );
 }
 
 export default App;

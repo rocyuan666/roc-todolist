@@ -6,7 +6,12 @@ const { PRIVATE_KEY } = require("../app/config");
 
 class LoginService {
   async login(username, password) {
-    const sql = "SELECT * FROM sys_user WHERE user_name = ?";
+    if (!username) {
+      return apiError("用户名为空!");
+    } else if (!password) {
+      return apiError("密码为空！");
+    }
+    const sql = "SELECT * FROM roc_user WHERE username = ?";
     const [result] = await db.execute(sql, [username]);
     if (result.length == 0) {
       return apiError("无此用户");

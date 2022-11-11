@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import loginBg from "../../assets/images/login-bg-1.jpg";
+import loginBg from "../../assets/images/login-bg-2.jpg";
 
 export const LoginWrapBox = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ export const LoginWrapBox = styled.div`
   background-position: center center;
   .login-box {
     width: 500px;
-    height: 300px;
+    height: 360px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -26,6 +26,9 @@ export const LoginWrapBox = styled.div`
     }
     .username {
       margin-bottom: 20px;
+    }
+    .againPassword {
+      margin-top: 20px;
     }
     .btn-box {
       display: flex;
