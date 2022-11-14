@@ -24,8 +24,8 @@ class LoginService {
       */
       const token = jwt.sign(
         {
-          id: result[0].user_id,
-          username: result[0].user_name,
+          id: result[0].id,
+          username: result[0].username,
         },
         PRIVATE_KEY,
         {

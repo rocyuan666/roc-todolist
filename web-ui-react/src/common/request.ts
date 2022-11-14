@@ -30,7 +30,7 @@ export function request(newConfig: AxiosRequestConfig<any>) {
       return config;
     },
     (err) => {
-      console.log(err);
+      Promise.reject(err);
     }
   );
   // 响应拦截
@@ -54,7 +54,7 @@ export function request(newConfig: AxiosRequestConfig<any>) {
       }
     },
     (err) => {
-      console.log(err);
+      Promise.reject(err);
     }
   );
 

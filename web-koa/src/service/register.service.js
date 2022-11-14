@@ -21,7 +21,7 @@ class RegisterService {
     if (err) {
       return apiError(err);
     }
-    return apiSuccess({ userId: result[0].insertId });
+    return apiSuccess(result[0].insertId);
   }
 }
 

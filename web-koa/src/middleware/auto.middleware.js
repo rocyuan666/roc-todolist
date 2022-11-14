@@ -12,11 +12,11 @@ const tokenAuth = async (ctx, next) => {
         verify(token, 公钥, 选项{algorithms: 算法})
         返回 数据体 + iat与exp
       */
-      const decode = jwt.verify(token, PUBLIC_KEY, { algorithms: ["RS256"] });
+      const decode = await jwt.verify(token, PUBLIC_KEY, { algorithms: ["RS256"] });
       ctx.user = decode;
       await next();
     } catch (error) {
-      ctx.body = apiError("token失效", 401);
+      ctx.body = apiError(error, 401);
     }
   }
 };

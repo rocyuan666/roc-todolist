@@ -38,7 +38,6 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
     });
   }
   async handleRegister() {
-    console.log(this.state);
     if (!this.state.username || !this.state.password || !this.state.againPassword) {
       return message.error("用户名或密码不能为空");
     } else if (this.state.password.trim() !== this.state.againPassword) {
