@@ -21,20 +21,30 @@ export const StyledHeaderInfoWrap = styled.div`
   .user-info-box {
     display: flex;
     align-items: center;
-    .img-logo {
-      display: block;
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-      border-radius: 50%;
-    }
-    .user-name {
-      font-size: 18px;
-      margin-bottom: 0;
+    .user-info-main {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      .img-logo {
+        display: block;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      .user-name {
+        width: 112px;
+        display: block;
+        font-size: 16px;
+        margin-bottom: 0;
+        margin-left: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
     .roc-logout {
       color: #666;
-      margin-left: 46px;
+      margin-left: 10px;
       font-size: 16px;
       cursor: pointer;
     }

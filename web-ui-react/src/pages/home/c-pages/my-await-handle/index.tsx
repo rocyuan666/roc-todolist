@@ -3,7 +3,6 @@ import classnames from "classnames";
 
 import { TypeML } from "../../../../store/reducer";
 import { actionChangeMatterList, actionChangeDoneMatterList } from "../../../../store/actions";
-
 import { StyledMyAwaitHandleWrap, StyledMatterWrap, StyledDelPopWrap } from "./styled";
 
 import { Modal } from "antd";
@@ -205,7 +204,7 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
   async clickOkDel() {
     const { delCurrentMatter } = this.state;
     await del({ id: delCurrentMatter.id });
-    this.getDataList();
+    this.dataInit();
     this.setState({
       isDelete: false,
     });
@@ -314,6 +313,7 @@ const mapStateToProps = (state: TypeML) => {
     doneMatterList: state.doneMatterList,
     themeColor: state.themeColor,
     themeColorCurrentIndex: state.themeColorCurrentIndex,
+    userInfo: state.userInfo,
   };
 };
 const mapDispatchToProps = (dispatch: any) => {

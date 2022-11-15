@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Input, message } from "antd";
+import { connect } from "react-redux";
 
+import { actionSetUserInfo } from "../../store/actions";
 import { login } from "../../api/login";
 
 import { LoginWrapBox } from "./styled";
@@ -11,7 +13,7 @@ interface Istate {
   password: string;
 }
 
-export default class RocLogin extends PureComponent<any, Istate> {
+class RocLogin extends PureComponent<any, Istate> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -39,6 +41,7 @@ export default class RocLogin extends PureComponent<any, Istate> {
     };
     const res = await login(sendObj);
     localStorage.setItem("token", res.data.token);
+    this.props.setUserInfo();
     window.location.href = "#/";
   }
   render() {
@@ -88,3 +91,17 @@ export default class RocLogin extends PureComponent<any, Istate> {
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    setUserInfo: () => {
+      dispatch(actionSetUserInfo());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RocLogin);

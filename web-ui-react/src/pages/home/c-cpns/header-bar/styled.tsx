@@ -1,9 +1,9 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const HeaderBarWrap = styled.div`
-	height: 100px;
-	line-height: 100px;
-	span{
-		margin: 0 20px;
-	}
-`
+  /* height: 100px; */
+  margin: 20px 0;
+  span {
+    margin: 0 20px;
+  }
+`;
