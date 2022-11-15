@@ -10,6 +10,18 @@ roc-todolist，前端是基于 ts + react 技术栈开发，后端是基于 js +
 
 预览地址：[http://todolist.rocyuan.top/](http://todolist.rocyuan.top/)
 
+验证码暂无时间引入，有时间补上 -。-
+
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391701-22be9eb5-7c44-498d-8f43-b0b227b0c75a.png"></image>
+
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391733-bb9c5d03-9588-4c5f-bc71-7dab226e3fc7.png?x-oss-process=image%2Fresize%2Cw_750%2Climit_0"></image>
+
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391351-f65da5bb-1725-48c1-916a-abae2e417b85.png"></image>
+
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391390-6f9b3f9b-7fee-4b3b-b316-37a6cc749b1f.png"></image>
+
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391395-dc01150a-76fe-4cae-973d-3cf03b9d58a1.png"></image>
+
 ## 前端部分
 
 前端根目录在 web-ui-react
