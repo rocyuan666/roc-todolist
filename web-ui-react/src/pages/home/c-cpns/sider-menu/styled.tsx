@@ -34,7 +34,7 @@ export const StyledHeaderInfoWrap = styled.div`
       .user-name {
         width: 112px;
         display: block;
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 0;
         margin-left: 10px;
         overflow: hidden;
