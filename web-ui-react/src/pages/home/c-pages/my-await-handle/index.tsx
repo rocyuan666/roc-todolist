@@ -109,6 +109,7 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
       isPopShow: true,
       urgentColor: "",
       name: "",
+      currentMatter: {},
     });
   }
   // 处理事项状态改变
