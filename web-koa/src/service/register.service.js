@@ -4,8 +4,10 @@ const { apiError, apiSuccess } = require("../utils/apiBase");
 const { md5 } = require("../utils/crypto-utils");
 
 class RegisterService {
-  async register(username, password) {
-    if (!username) {
+  async register(nickname, username, password) {
+    if (!nickname) {
+      return apiError("昵称为空!");
+    } else if (!username) {
       return apiError("用户名为空!");
     } else if (!password) {
       return apiError("密码为空！");
@@ -16,8 +18,8 @@ class RegisterService {
       return apiError("用户名已存在");
     }
     const addtime = new Date();
-    const sqlInsert = "INSERT INTO roc_user(username, password, addtime) VALUES(?, ?, ?)";
-    const [err, result] = await asyncTasks(db.execute(sqlInsert, [username, md5(password), addtime]));
+    const sqlInsert = "INSERT INTO roc_user(nickname, username, password, addtime) VALUES(?, ?, ?, ?)";
+    const [err, result] = await asyncTasks(db.execute(sqlInsert, [nickname, username, md5(password), addtime]));
     if (err) {
       return apiError(err);
     }

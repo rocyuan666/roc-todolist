@@ -7,6 +7,7 @@ import { register } from "../../api/register";
 import { LoginWrapBox } from "./styled";
 
 interface Istate {
+  nickname: string;
   username: string;
   password: string;
   againPassword: string;
@@ -17,10 +18,16 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
   constructor(props: Iprops) {
     super(props);
     this.state = {
+      nickname: "",
       username: "",
       password: "",
       againPassword: "",
     };
+  }
+  changeNickname(value: string) {
+    this.setState({
+      nickname: value,
+    });
   }
   changeUsername(value: string) {
     this.setState({
@@ -38,12 +45,17 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
     });
   }
   async handleRegister() {
-    if (!this.state.username || !this.state.password || !this.state.againPassword) {
+    if (!this.state.nickname.trim()) {
+      return message.error("请输入昵称");
+    } else if (!this.state.username || !this.state.password) {
       return message.error("用户名或密码不能为空");
+    } else if (!/^[0-9a-zA-Z]+$/.test(this.state.username)) {
+      return message.error("用户名格式错误，仅可包含大小写英文字母、数字");
     } else if (this.state.password.trim() !== this.state.againPassword) {
       return message.error("两次密码输入不一致，请检查");
     }
     const sendObj = {
+      nickname: this.state.nickname.trim(),
       username: this.state.username.trim(),
       password: this.state.password.trim(),
     };
@@ -57,12 +69,24 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
           <h1>roc-todolist - 注册账号</h1>
           <Input
             className="username"
+            value={this.state.nickname}
+            onChange={(e) => {
+              this.changeNickname(e.target.value);
+            }}
+            size="large"
+            placeholder="请输入昵称"
+            maxLength={10}
+            prefix={<UserOutlined />}
+          />
+          <Input
+            className="username"
             value={this.state.username}
             onChange={(e) => {
               this.changeUsername(e.target.value);
             }}
             size="large"
             placeholder="请输入用户名"
+            maxLength={20}
             prefix={<UserOutlined />}
           />
           <Input.Password
@@ -72,6 +96,7 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
               this.changePassword(e.target.value);
             }}
             placeholder="请输入密码"
+            maxLength={20}
             prefix={<LockOutlined />}
           />
           <Input.Password

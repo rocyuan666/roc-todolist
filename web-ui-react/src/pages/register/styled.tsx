@@ -13,7 +13,7 @@ export const LoginWrapBox = styled.div`
   background-position: center center;
   .login-box {
     width: 500px;
-    height: 360px;
+    height: 420px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

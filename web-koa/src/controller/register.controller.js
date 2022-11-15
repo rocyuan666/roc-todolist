@@ -2,8 +2,8 @@ const registerService = require("../service/register.service");
 
 class RegisterController {
   async register(ctx, next) {
-    const { username, password } = ctx.request.body;
-    ctx.body = await registerService.register(username, password);
+    const { nickname, username, password } = ctx.request.body;
+    ctx.body = await registerService.register(nickname, username, password);
   }
 }
 
