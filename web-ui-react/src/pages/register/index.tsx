@@ -3,6 +3,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Input, message } from "antd";
 
 import { register } from "../../api/register";
+import { captcha } from "../../api/login";
 
 import { LoginWrapBox } from "./styled";
 
@@ -11,6 +12,9 @@ interface Istate {
   username: string;
   password: string;
   againPassword: string;
+  uuid: string;
+  captcha: string;
+  captchaBase64Img: string;
 }
 interface Iprops {}
 
@@ -22,7 +26,20 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
       username: "",
       password: "",
       againPassword: "",
+      uuid: "",
+      captcha: "",
+      captchaBase64Img: "",
     };
+  }
+  componentDidMount() {
+    this.getCaptcha();
+  }
+  async getCaptcha() {
+    const res = await captcha();
+    this.setState({
+      uuid: res.data.uuid,
+      captchaBase64Img: res.data.captcha,
+    });
   }
   changeNickname(value: string) {
     this.setState({
@@ -44,23 +61,40 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
       againPassword: value,
     });
   }
+  changeCaptcha(value: string) {
+    this.setState({
+      captcha: value,
+    });
+  }
   async handleRegister() {
     if (!this.state.nickname.trim()) {
       return message.error("请输入昵称");
-    } else if (!this.state.username || !this.state.password) {
+    } else if (!this.state.username.trim() || !this.state.password.trim()) {
       return message.error("用户名或密码不能为空");
     } else if (!/^[0-9a-zA-Z]+$/.test(this.state.username)) {
       return message.error("用户名格式错误，仅可包含大小写英文字母、数字");
-    } else if (this.state.password.trim() !== this.state.againPassword) {
+    } else if (this.state.password.trim() !== this.state.againPassword.trim()) {
       return message.error("两次密码输入不一致，请检查");
+    } else if (!this.state.captcha.trim()) {
+      return message.error("验证码不能为空");
     }
     const sendObj = {
       nickname: this.state.nickname.trim(),
       username: this.state.username.trim(),
       password: this.state.password.trim(),
+      uuid: this.state.uuid,
+      captcha: this.state.captcha.trim(),
     };
-    await register(sendObj);
-    message.success("注册成功，快去登录吧~");
+    register(sendObj)
+      .then(() => {
+        message.success("注册成功，快登录吧~");
+        setTimeout(() => {
+          window.location.href = "#/login";
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   render() {
     return (
@@ -109,6 +143,27 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
             placeholder="请再次输入密码"
             prefix={<LockOutlined />}
           />
+          <div className="captcha-box">
+            <Input
+              className="captcha"
+              value={this.state.captcha}
+              onChange={(e) => {
+                this.changeCaptcha(e.target.value);
+              }}
+              size="large"
+              maxLength={4}
+              placeholder="请输入验证码"
+              prefix={<UserOutlined />}
+            />
+            <img
+              className="captcha-img"
+              src={this.state.captchaBase64Img}
+              alt="验证码"
+              onClick={() => {
+                this.getCaptcha();
+              }}
+            />
+          </div>
           <div className="btn-box">
             <span
               className="btn-submit bgc"

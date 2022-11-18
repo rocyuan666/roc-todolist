@@ -3,13 +3,22 @@ const jwt = require("jsonwebtoken");
 const { apiSuccess, apiError } = require("../utils/apiBase");
 const { md5 } = require("../utils/crypto-utils");
 const { PRIVATE_KEY } = require("../app/config");
+const redisClient = require("../app/redis");
 
 class LoginService {
-  async login(username, password) {
+  async login(username, password, uuid, captcha) {
+    if (!uuid) {
+      return apiError("uuid为空！");
+    }
+    const redisCaptcha = await redisClient.get(uuid);
     if (!username) {
       return apiError("用户名为空!");
     } else if (!password) {
       return apiError("密码为空！");
+    } else if (!captcha) {
+      return apiError("验证码为空！");
+    } else if (redisCaptcha !== captcha) {
+      return apiError("验证码错误！", -1);
     }
     const sql = "SELECT * FROM roc_user WHERE username = ?";
     const [result] = await db.execute(sql, [username]);

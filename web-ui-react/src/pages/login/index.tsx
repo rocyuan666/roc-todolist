@@ -4,13 +4,16 @@ import { Input, message } from "antd";
 import { connect } from "react-redux";
 
 import { actionSetUserInfo } from "../../store/actions";
-import { login } from "../../api/login";
+import { login, captcha } from "../../api/login";
 
 import { LoginWrapBox } from "./styled";
 
 interface Istate {
   username: string;
   password: string;
+  uuid: string;
+  captcha: string;
+  captchaBase64Img: string;
 }
 
 class RocLogin extends PureComponent<any, Istate> {
@@ -19,11 +22,29 @@ class RocLogin extends PureComponent<any, Istate> {
     this.state = {
       username: "",
       password: "",
+      uuid: "",
+      captcha: "",
+      captchaBase64Img: "",
     };
+  }
+  componentDidMount() {
+    this.getCaptcha();
+  }
+  async getCaptcha() {
+    const res = await captcha();
+    this.setState({
+      uuid: res.data.uuid,
+      captchaBase64Img: res.data.captcha,
+    });
   }
   changeUsername(value: string) {
     this.setState({
       username: value,
+    });
+  }
+  changeCaptcha(value: string) {
+    this.setState({
+      captcha: value,
     });
   }
   changePassword(value: string) {
@@ -32,12 +53,16 @@ class RocLogin extends PureComponent<any, Istate> {
     });
   }
   async handleLogin() {
-    if (!this.state.username || !this.state.password) {
+    if (!this.state.username.trim() || !this.state.password.trim()) {
       return message.error("用户名或密码不能为空");
+    } else if (!this.state.captcha.trim()) {
+      return message.error("验证码不能为空");
     }
     const sendObj = {
       username: this.state.username.trim(),
       password: this.state.password.trim(),
+      uuid: this.state.uuid,
+      captcha: this.state.captcha.trim(),
     };
     const res = await login(sendObj);
     localStorage.setItem("token", res.data.token);
@@ -68,6 +93,27 @@ class RocLogin extends PureComponent<any, Istate> {
             placeholder="请输入密码"
             prefix={<LockOutlined />}
           />
+          <div className="captcha-box">
+            <Input
+              className="captcha"
+              value={this.state.captcha}
+              onChange={(e) => {
+                this.changeCaptcha(e.target.value);
+              }}
+              size="large"
+              maxLength={4}
+              placeholder="请输入验证码"
+              prefix={<UserOutlined />}
+            />
+            <img
+              className="captcha-img"
+              src={this.state.captchaBase64Img}
+              alt="验证码"
+              onClick={() => {
+                this.getCaptcha();
+              }}
+            />
+          </div>
           <div className="btn-box">
             <span
               className="btn-submit bgc"

@@ -10,11 +10,9 @@ roc-todolist，前端是基于 ts + react 技术栈开发，后端是基于 js +
 
 预览地址：[http://todolist.rocyuan.top/](http://todolist.rocyuan.top/)
 
-验证码暂无时间引入，有时间补上 -。-
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668759626804-4f97beea-4743-4067-9550-fb07d34def0c.png"></image>
 
-<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391701-22be9eb5-7c44-498d-8f43-b0b227b0c75a.png"></image>
-
-<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391733-bb9c5d03-9588-4c5f-bc71-7dab226e3fc7.png?x-oss-process=image%2Fresize%2Cw_750%2Climit_0"></image>
+<image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668759639057-6a76e981-3159-45e6-aef6-63313053f791.png"></image>
 
 <image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391351-f65da5bb-1725-48c1-916a-abae2e417b85.png"></image>
 
@@ -54,6 +52,8 @@ roc-todolist，前端是基于 ts + react 技术栈开发，后端是基于 js +
 - @koa/multer multer 文件上传使用
 - @koa/router 路由使用
 - mysql2 mysql 使用
+- redis 使用
+- captchapng 图片验证码使用
 - crypto-js 密码 MD5 加密使用
 - jsonwebtoken（JWT）生成、效验 token 使用
 - RSA 加密使用

@@ -2,8 +2,8 @@ const loginService = require("../service/login.service");
 
 class LoginController {
   async login(ctx, next) {
-    const { username, password } = ctx.request.body;
-    ctx.body = await loginService.login(username, password);
+    const { username, password, uuid, captcha } = ctx.request.body;
+    ctx.body = await loginService.login(username, password, uuid, captcha);
   }
 }
 

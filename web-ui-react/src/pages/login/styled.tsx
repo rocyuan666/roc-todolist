@@ -13,7 +13,6 @@ export const LoginWrapBox = styled.div`
   background-position: center center;
   .login-box {
     width: 500px;
-    height: 300px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -27,10 +26,27 @@ export const LoginWrapBox = styled.div`
     .username {
       margin-bottom: 20px;
     }
+    .captcha-box {
+      position: relative;
+      .captcha {
+        margin-top: 20px;
+      }
+      .captcha-img {
+        position: absolute;
+        right: 0;
+        top: 20px;
+        z-index: 9;
+        width: 98px;
+        height: 40px;
+        border: 1px solid #82c6fd;
+        cursor: pointer;
+      }
+    }
     .btn-box {
       display: flex;
       justify-content: space-between;
       margin-top: 30px;
+      padding-bottom: 40px;
       .btn-submit {
         display: block;
         width: 150px;
