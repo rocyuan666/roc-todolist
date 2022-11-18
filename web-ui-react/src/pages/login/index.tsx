@@ -80,6 +80,9 @@ class RocLogin extends PureComponent<any, Istate> {
             onChange={(e) => {
               this.changeUsername(e.target.value);
             }}
+            onPressEnter={() => {
+              this.handleLogin();
+            }}
             size="large"
             placeholder="请输入用户名"
             prefix={<UserOutlined />}
@@ -90,6 +93,9 @@ class RocLogin extends PureComponent<any, Istate> {
             onChange={(e) => {
               this.changePassword(e.target.value);
             }}
+            onPressEnter={() => {
+              this.handleLogin();
+            }}
             placeholder="请输入密码"
             prefix={<LockOutlined />}
           />
@@ -99,6 +105,9 @@ class RocLogin extends PureComponent<any, Istate> {
               value={this.state.captcha}
               onChange={(e) => {
                 this.changeCaptcha(e.target.value);
+              }}
+              onPressEnter={() => {
+                this.handleLogin();
               }}
               size="large"
               maxLength={4}

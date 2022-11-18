@@ -107,6 +107,9 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
             onChange={(e) => {
               this.changeNickname(e.target.value);
             }}
+            onPressEnter={() => {
+              this.handleRegister();
+            }}
             size="large"
             placeholder="请输入昵称"
             maxLength={10}
@@ -117,6 +120,9 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
             value={this.state.username}
             onChange={(e) => {
               this.changeUsername(e.target.value);
+            }}
+            onPressEnter={() => {
+              this.handleRegister();
             }}
             size="large"
             placeholder="请输入用户名"
@@ -129,6 +135,9 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
             onChange={(e) => {
               this.changePassword(e.target.value);
             }}
+            onPressEnter={() => {
+              this.handleRegister();
+            }}
             placeholder="请输入密码"
             maxLength={20}
             prefix={<LockOutlined />}
@@ -140,6 +149,9 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
             onChange={(e) => {
               this.changeAgainPassword(e.target.value);
             }}
+            onPressEnter={() => {
+              this.handleRegister();
+            }}
             placeholder="请再次输入密码"
             prefix={<LockOutlined />}
           />
@@ -149,6 +161,9 @@ export default class RocLogin extends PureComponent<Iprops, Istate> {
               value={this.state.captcha}
               onChange={(e) => {
                 this.changeCaptcha(e.target.value);
+              }}
+              onPressEnter={() => {
+                this.handleRegister();
               }}
               size="large"
               maxLength={4}
