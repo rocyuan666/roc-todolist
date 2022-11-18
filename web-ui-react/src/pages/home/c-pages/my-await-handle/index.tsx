@@ -26,6 +26,7 @@ export interface IMatterItem {
   status: number;
   level: number;
   name: string;
+  addtime?: string;
 }
 
 interface IState {
@@ -147,7 +148,7 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
                   backgroundColor: this.state.urgentColorList[matterItem.level],
                 }}
               >
-                红线
+                事项优先级标识
               </span>
               {/* 选项 */}
               <div className="option">
@@ -163,7 +164,10 @@ class RocMyAwaitHandle extends PureComponent<IProps, IState, IMatterItem> {
                   <CheckOutlined className="icon-yes" />
                 </div>
               </div>
+              {/* 事项 */}
               <p className="text">{matterItem.name}</p>
+              {/* 添加时间 */}
+              {/* <p>{matterItem.addtime}</p> */}
             </div>
             <div className="right-box">
               {!matterItem.status && (

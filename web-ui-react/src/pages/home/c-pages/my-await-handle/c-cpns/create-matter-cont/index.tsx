@@ -69,7 +69,7 @@ export default class CpnRocCreateMatterCont extends PureComponent<Iprops, Istate
       <StyledCreateMatterContWrap themeColor={this.props.themeColor}>
         <div className="inpt-box">
           <label className="name" htmlFor="matter-name">
-            事项名称:
+            事项:
           </label>
           <input
             className="value"
