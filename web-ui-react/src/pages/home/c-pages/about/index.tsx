@@ -31,6 +31,7 @@ export default class RocAbout extends PureComponent {
           <p>@koa/router</p>
           <p>jsonwebtoken</p>
           <p>mysql2</p>
+          <p>redis</p>
           <p>multer</p>
         </div>
       </StyledAboutWrap>
