@@ -20,7 +20,13 @@ roc-todolist，前端是基于 ts + react 技术栈开发，后端是基于 js +
 
 <image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668501391395-dc01150a-76fe-4cae-973d-3cf03b9d58a1.png"></image>
 
-## 前端部分
+## 环境
+
+- Node 14
+- MySQL 5.7
+- Redis 7
+
+## 前端
 
 前端根目录在 web-ui-react
 
@@ -39,7 +45,7 @@ roc-todolist，前端是基于 ts + react 技术栈开发，后端是基于 js +
 - classnames 动态 class 使用
 - ...
 
-## 后端部分
+## 后端
 
 后端根目录在 web-koa
 
