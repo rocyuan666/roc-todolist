@@ -1,5 +1,5 @@
 const { apiSuccess } = require("../utils/apiBase");
-const { APP_HOST } = require("../app/config");
+const { APP_HOST, APP_PORT } = require("../app/config");
 
 class UploadService {
   async upload(file) {
