@@ -1,9 +1,9 @@
 const { apiSuccess } = require("../utils/apiBase");
-const { APP_HOST, APP_PORT } = require("../app/config");
+const { APP_UPLOAD_BASEURL } = require("../app/config");
 
 class UploadService {
   async upload(file) {
-    const filePath = `${APP_HOST}:${APP_PORT}/uploads/${file.filename}`;
+    const filePath = `${APP_UPLOAD_BASEURL}/uploads/${file.filename}`;
     return apiSuccess(filePath);
   }
 }

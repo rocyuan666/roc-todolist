@@ -9,7 +9,7 @@ const PUBLIC_KEY = fs.readFileSync(path.resolve(__dirname, "./keys/public.key"))
 
 const DES_KEY = "yuanpeng";
 
-module.exports = { APP_HOST, APP_PORT, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, REDIS_HOST, REDIS_PORT } = process.env;
+module.exports = { APP_HOST, APP_PORT, APP_UPLOAD_BASEURL, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, REDIS_HOST, REDIS_PORT } = process.env;
 
 module.exports.PRIVATE_KEY = PRIVATE_KEY;
 module.exports.PUBLIC_KEY = PUBLIC_KEY;
