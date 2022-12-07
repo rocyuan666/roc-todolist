@@ -16,8 +16,8 @@ export default class CpnRocHeaderBar extends PureComponent {
         </span>
         <span>
           github:
-          <a href="https://github.com/rocyuan666" target="_blank" rel="noreferrer">
-            https://github.com/rocyuan666
+          <a href="https://github.com/rocyuan666/roc-todolist" target="_blank" rel="noreferrer">
+          https://github.com/rocyuan666/roc-todolist
           </a>
         </span>
       </HeaderBarWrap>
