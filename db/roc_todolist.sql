@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : roc_todolist
  Source Server Type    : MySQL
- Source Server Version : 50726
- Source Host           : localhost:3306
+ Source Server Version : 50650
+ Source Host           : 192.168.0.147:3306
  Source Schema         : roc_todolist
 
  Target Server Type    : MySQL
- Target Server Version : 50726
+ Target Server Version : 50650
  File Encoding         : 65001
 
- Date: 07/12/2022 09:04:20
+ Date: 07/12/2022 09:07:48
 */
 
 SET NAMES utf8mb4;
@@ -46,6 +46,6 @@ CREATE TABLE `roc_user`  (
   `addtime` datetime(0) NULL DEFAULT NULL COMMENT '添加时间',
   `edittime` datetime(0) NULL DEFAULT NULL COMMENT '编辑时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
