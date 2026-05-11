@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/assets/css/base.css"],"names":[],"mappings":"AAAA,MACC,0BAED,CAEA,KACC,wBACD","file":"main.fe38ea8a.chunk.css","sourcesContent":["a, img {\n\t-webkit-touch-callout: none;\n\t/* 禁止长按链接与图片弹出菜单 */\n}\n\nbody {\n\tbackground-color: #F1F2F6;\n}"]}
