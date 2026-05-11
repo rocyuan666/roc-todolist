@@ -8,8 +8,6 @@ roc-todolist，前端是基于 ts + react 技术栈开发，后端是基于 js +
 
 ## 预览
 
-预览地址：[http://todolist.rocyuan.top/](http://todolist.rocyuan.top/)
-
 <image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668759626804-4f97beea-4743-4067-9550-fb07d34def0c.png"></image>
 
 <image width="100%" src="https://cdn.nlark.com/yuque/0/2022/png/2779910/1668759639057-6a76e981-3159-45e6-aef6-63313053f791.png"></image>
